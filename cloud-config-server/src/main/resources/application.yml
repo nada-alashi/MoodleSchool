@@ -1,0 +1,12 @@
+server:
+    port: 9092
+
+spring:
+    application:
+        name: Config-Server
+    cloud:
+        config:
+            server:
+                git:
+                    url:
+                        clone-on-start: true

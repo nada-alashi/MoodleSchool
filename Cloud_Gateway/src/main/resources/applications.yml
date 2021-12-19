@@ -1,0 +1,52 @@
+server:
+    port: 9191
+
+spring:
+    application:
+        name: API_Gateway
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        serviceUrl: 
+            defaultZone: http://localhost:9090/eureka
+    instance: 
+        hostname: localhost
+
+cloud:
+    gateway:
+        routes:
+            - id: Calendar-Service
+            uri: lb://Calendar-Service
+            predicates:
+                - Path=/calendar/**
+            filters:
+                - name: CircuitBreaker
+                args:
+                    name: Calendar-Service
+                    fallbackuri: forward:/calendarServiceFallBack
+
+            - id: Courses-Service
+            uri: lb://Courses-Service
+            predicates:
+                - Path=/courses/**
+            filters:
+                - name: CircuitBreaker
+                args:
+                    name: Courses-Service
+                    fallbackuri: forward:/coursesServiceFallBack
+
+# hystrix:
+#     command:
+#         fallbackcmd:
+#             execution:
+#                 isolation:
+#                     thread:
+#                         timeoutInMilliseconds: 4000
+
+# management:
+#     endpoints:
+#         web:
+#             exposure:
+#                 include: hystrix.stream

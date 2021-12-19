@@ -1,0 +1,31 @@
+server:
+    port: 8012
+
+spring:
+    application:
+        name: Courses-Service
+    cloud:
+        config:
+            enabled: true
+            uri: http://localhost:9092
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        serviceUrl: 
+            defaultZone: http://localhost:9090/eureka
+    instance: 
+        hostname:
+            localhost
+
+
+    # datasource:
+    #     driver-class-name: com.mysql.cj.jdbc.Driver
+    #     url: jdbc:mysql://localhost:8012/moodle?serverTimezone=UTC
+    #     username: root
+    #     password: root
+    #     nitialization-mode: always
+    # jpa:
+    #     hibernate:
+    #         ddl-auto: update
